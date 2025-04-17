@@ -11,6 +11,8 @@ import com.ghost.uwhub.msvc_users.adapter.input.api.mapper.UserMapper;
 import com.ghost.uwhub.msvc_users.domain.model.User;
 import com.ghost.uwhub.msvc_users.domain.port.input.UserServicePort;
 
+import jakarta.validation.Valid;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,13 +41,13 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<UserResponse> register(@RequestBody UserRegister userRegister) {
+    public ResponseEntity<UserResponse> register(@RequestBody @Valid UserRegister userRegister) {
         User newUser = this.userService.register(this.mapper.registerToUser(userRegister));
         return ResponseEntity.status(HttpStatus.CREATED).body(this.mapper.userToResponse(newUser));
     }
 
     @PostMapping("/login")
-    public ResponseEntity<UserResponse> login(@RequestBody UserLogin userLogin) {
+    public ResponseEntity<UserResponse> login(@RequestBody @Valid UserLogin userLogin) {
         User newUser = this.userService.login(this.mapper.loginToUser(userLogin));
         return ResponseEntity.status(HttpStatus.CREATED).body(this.mapper.userToResponse(newUser));
     }
@@ -63,7 +65,7 @@ public class UserController {
     }  
 
     @PutMapping("/{id}")
-    public ResponseEntity<UserResponse> update(@PathVariable String id, @RequestBody UserRequest userRequest) {
+    public ResponseEntity<UserResponse> update(@PathVariable String id, @RequestBody @Valid UserRequest userRequest) {
         User userUpdated = this.userService.update(id, this.mapper.requestToUser(userRequest));
         return ResponseEntity.ok().body(this.mapper.userToResponse(userUpdated));
     }

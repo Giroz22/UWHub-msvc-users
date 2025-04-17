@@ -16,5 +16,5 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @EqualsAndHashCode(callSuper = true)
 public class ErrorsResponse extends ErrorBaseResponse{
-    private List<String> messages;
+    private List<String> errors;
 }
