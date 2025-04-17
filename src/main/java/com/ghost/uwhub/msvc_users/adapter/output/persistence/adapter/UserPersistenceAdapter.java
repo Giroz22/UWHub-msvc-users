@@ -12,6 +12,8 @@ import com.ghost.uwhub.msvc_users.domain.model.User;
 import com.ghost.uwhub.msvc_users.domain.port.output.UserPersistencePort;
 import com.ghost.uwhub.msvc_users.infrastructure.exception.IdNotFoundException;
 
+import jakarta.transaction.Transactional;
+
 @Component
 public class UserPersistenceAdapter implements UserPersistencePort {
 
@@ -27,6 +29,7 @@ public class UserPersistenceAdapter implements UserPersistencePort {
     }
 
     @Override
+    @Transactional
     public User create(User user) {
         UserEntity userEntity = this.mapper.userToUserEntity(user);
         UserEntity userSaved = this.repository.save(userEntity);
@@ -44,6 +47,7 @@ public class UserPersistenceAdapter implements UserPersistencePort {
     }
 
     @Override
+    @Transactional
     public User update(String id, User user) {
         UserEntity userEntityDB = this.find(id);
         
@@ -55,6 +59,7 @@ public class UserPersistenceAdapter implements UserPersistencePort {
     }
 
     @Override
+    @Transactional
     public void delete(String id) {
         UserEntity userEntity = this.find(id);
         this.repository.delete(userEntity);
